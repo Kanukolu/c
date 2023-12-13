@@ -16,7 +16,7 @@ exports.signUp=(req,res,next)=>{
 
                 bcrypt.hash(password,(err,hash)=>{
                     User.create({name,email,phone,password:hash})
-                        .then(resul=>{
+                        .then(result=>{
                             res.status(200).json({msg:'ok',message:'user created successfully'})
                         }).catch(err=>{
                             throw new Error(err)

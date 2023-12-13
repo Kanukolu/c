@@ -25,8 +25,12 @@ function checking(event){
         axios.post(`http://127.0.0.1:3000/user/signup`,obj)
             .then((res)=>{
                 if(res.data.msg==='ok'){
-                    alert('user created,now you can login')
+                    alert('Successfuly signed up')
                     document.getElementById('form').reset()
+                    const form=document.getElementById('form');
+                    form.action='./login.html';
+                    form.method='get'
+                    form.submit()
 
                     return true;
 
