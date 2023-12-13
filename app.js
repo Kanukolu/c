@@ -6,13 +6,16 @@ const path =require('path')
 
 require('dotenv').config();
 
-const User=require('./models/models')
+const {User,personalMsg}=require('./models/models')
 
 const sequelize=require('./util/db')
 
 const route=require('./routes/signup')
 
 const cors=require('cors')
+User.hasMany(personalMsg)
+
+personalMsg.belongsTo(User)
 
 const jwt=require('jsonwebtoken')
 
@@ -33,7 +36,7 @@ app.use('/',route)
 
 sequelize
 .sync()
-//.sync({force : true})
+//sync({force : true})
 .then((result) => {
     app.listen(process.env.PORT)
 }).catch(e => console.log(e))

@@ -14,5 +14,14 @@ const User=sequelize.define('user',{
     phone:Sequelize.STRING,
     password:Sequelize.STRING
 })
+const personalMsg=sequelize.define('personalmsg',{
+    id:{
+        type:Sequelize.INTEGER,
+        primaryKey:true,
+        autoIncrement:true,
+        allowNull:false
+    },
+    msg:Sequelize.STRING
+})
 
-module.exports=User
+module.exports={User,personalMsg}
