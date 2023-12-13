@@ -12,10 +12,15 @@ function check(event){
    
     axios.post(gurl,obj)
         .then(res=>{
-            console.log(res);
-
+            localStorage.setItem('token',res.data.token);
+            const form=document.getElementById('form');
+            form.action='./frontchat.html'
+            form.method='get'
+            alert(res.data.message)          
+            form.submit()
         }).catch(err=>{
             console.log(err)
+            alert(`"something went wrong",${err.message}`)
         })
 
 }

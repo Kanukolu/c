@@ -1,4 +1,4 @@
-const User=require('../models/signup')
+const User=require('../models/models')
 const bcrypt=require('bcrypt')
 const jwt=require("jsonwebtoken")
 exports.signUp=(req,res,next)=>{

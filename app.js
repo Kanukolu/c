@@ -6,7 +6,7 @@ const path =require('path')
 
 require('dotenv').config();
 
-const User=require('./models/signup')
+const User=require('./models/models')
 
 const sequelize=require('./util/db')
 
