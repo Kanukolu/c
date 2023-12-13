@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  
+
+    <style>
+      
+    </style>
+  <title>SignUp</title>
+</head>
+
+<body>
+
+  <div class="container" style="display: flex; justify-content: center; padding-top: 50px;">
+    <div style="border: solid red; border-radius: 10px; padding: 100px;" id="paren">
+
+
+      <form id='form' onsubmit="return checking(event)" method="post">
+        <div>
+          <label for="username">Enter your name: </label><br>
+          <input type="text" name="username" id="username" required>
+
+        </div>
+        <div>
+          <label for="email">Enter your email: </label><br>
+          <input type="email" name="email" id="email" required>
+
+        </div>
+        <div>
+          <label for="phone">Enter Phone no.: </label><br>
+          <input type="tel" name="phone" id="phone" required>
+          <p class="error phone-err" style="display: none;"></p>
+        </div>
+        <div>
+          <label for="password">Password:</label><br>
+          <input type="password" name="password" id="password" required>
+        </div>
+
+        <div style="padding-top: 15px;">
+          <button type="submit">SignUp</button>
+        </div>
+
+      </form>
+
+      <div style="padding-top: 10px;" id="'loginlink"><a href="#">Existing User-Login</a></div>
+      <div style="color:red;" id="error-msg"></div>
+    </div>
+    
+    <div class="sty d-none d-md-block"></div>
+
+
+  </div>
+
+
+
+
+  
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.5.0/axios.min.js"></script>
+  <script src="signup.js"></script>
+  
+</body>
+
+</html>
