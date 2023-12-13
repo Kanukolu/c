@@ -1,6 +1,6 @@
 const User=require('../models/signup')
 const bcrypt=require('bcrypt')
-
+const jwt=require("jsonwebtoken")
 exports.signUp=(req,res,next)=>{
     // console.log(req.body);
     const name=req.body.name;
@@ -14,7 +14,7 @@ exports.signUp=(req,res,next)=>{
                 res.status(200).json({msg:'already exists'})
             }else{
 
-                bcrypt.hash(password,(err,hash)=>{
+                bcrypt.hash(password,10,(err,hash)=>{
                     User.create({name,email,phone,password:hash})
                         .then(result=>{
                             res.status(200).json({msg:'ok',message:'user created successfully'})
@@ -30,4 +30,26 @@ exports.signUp=(req,res,next)=>{
         })
 
 
+}
+exports.login=(req,res,next)=>{
+    // console.log(req)
+    const email=req.body.email;
+    const password=req.body.password;
+
+    User.findOne({where:{email:email}})
+        .then(resu=>{
+            if(resu!=null){
+
+                bcrypt.compare(password,resu.password,(err,result)=>{
+                    if(result==true){
+                        const token=jwt.sign(resu.id,process.env.JWT_KEY)
+                        res.json({token:token,message:'User login successful',success:true})
+                    }else{
+                        res.status(401).json({ success: false, message: 'User not authorized' })
+                    }
+                })
+            }else{
+                res.status(404).json({ success: false, message: 'User not found' })
+            }
+        }).catch(err=>console.log(err))
 }

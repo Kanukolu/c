@@ -14,7 +14,7 @@ const route=require('./routes/signup')
 
 const cors=require('cors')
 
-
+const jwt=require('jsonwebtoken')
 
 
 
