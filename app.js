@@ -2,40 +2,48 @@ const express= require('express')
 
 const bcrypt=require('bcrypt')
 
+const jwt=require('jsonwebtoken')
 const path =require('path')
 
 require('dotenv').config();
 
-const {User,personalMsg}=require('./models/models')
+const {User,personalMsg,Group}=require('./Models/models')
 
 const sequelize=require('./util/db')
 
-const route=require('./routes/signup')
+const route=require('./routes/routes')
 
 const cors=require('cors')
+
 User.hasMany(personalMsg)
 
 personalMsg.belongsTo(User)
 
-const jwt=require('jsonwebtoken')
+// User.hasMany(Group,{foreignKey:'creator'});
+// Group.belongsTo(User,{foreignKey:'creator'});
+
+User.belongsToMany(Group,{through:'usergroup'})
+Group.belongsToMany(User,{through:'usergroup'}) 
+
+Group.hasMany(personalMsg);
+personalMsg.belongsTo(Group)
 
 
+sequelize.sync({alter:true})
+// sequelize.drop({force:true})
 
 const app=express();
 
 app.use(express.static(path.join(__dirname,'public')))
 
 app.use(express.json())
-app.use(cors({
-    origin:'http://127.0.0.1:5500',
-    methods:['put','get','delete','post']
-}))
+
+// app.use(cors({
+//     origin:'http://127.0.0.1:5500',
+//     methods:['put','get','delete','post']
+// }))
+app.use(cors())
 
 app.use('/',route)
 
-sequelize
-.sync()
-//sync({force : true})
-.then((result) => {
-    app.listen(process.env.PORT)
-}).catch(e => console.log(e))
+app.listen(3000)
