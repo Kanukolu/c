@@ -1,6 +1,7 @@
 const {User,personalMsg}=require('../models/models')
 const bcrypt=require('bcrypt')
 const jwt=require("jsonwebtoken")
+const Sequelize = require('sequelize');
 exports.signUp=(req,res,next)=>{
     // console.log(req.body);
     const name=req.body.name;
@@ -33,7 +34,7 @@ exports.signUp=(req,res,next)=>{
 }
 exports.login=(req,res,next)=>{
     // console.log(req)
-    const email=req.body.email;
+    const email=req.body.email;const Sequelize = require('sequelize');
     const password=req.body.password;
 
     User.findOne({where:{email:email}})
@@ -64,7 +65,11 @@ exports.personalMsg=(req,res,next)=>{
         })
 }
 exports.allChat=(req,res,next)=>{
-    personalMsg.findAll()
+  
+    const lid=req.params.lid;
+    personalMsg.findAll({where:{id: {
+        [Sequelize.Op.gt]:lid,
+      }}})
         .then(result=>{
             res.json(result)
         }).catch(err=>{

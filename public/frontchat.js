@@ -1,3 +1,4 @@
+
 const url='http://127.0.0.1:3000'
 document.getElementById('bt').addEventListener('click',(event)=>{
     const chatmsg=document.getElementById('chats').value
@@ -14,39 +15,63 @@ document.getElementById('bt').addEventListener('click',(event)=>{
         .then(res=>{
             console.log(res);
             if(res.data.success==true){
-                
                 // alert(res.data.message)
                 console.log('successfully saved in db')
             }else{
-                
-                 // alert(res.data.message)
-                 console.log('not saved in db')
+                // alert(res.data.message)
+                console.log('not saved in db')
             }
 
             document.getElementById('chats').value=''
-            getAllChat();
+            getAllWithLs();
         }).catch(err=>{
             console.log(err)
         })
 })
 
 
-const getAllChat=()=>{
+const getAllWithLs=()=>{
+    let chats=JSON.parse(localStorage.getItem('chatmsg'))
 
-    const purl=url+'/user/allchat';
+    
+    if(chats){
+        const lid=chats[chats.length-1].id;
 
-    axios.get(purl)
-        .then(res=>{
-            const parent=document.getElementById('chatting');
-            parent.innerHTML=''
-            for(let i=0;i<res.data.length;i++){
-                const p=document.createElement('p');
-                p.textContent=res.data[i].msg;
-                parent.appendChild(p)
-
-            }
-        }).catch(err=>{
-            console.log(err)
-        })
+        const purl=url+`/user/allchat/${lid}`
+        axios.get(purl)
+            .then(res=>{
+                chats=chats.concat(res.data)
+                localStorage.setItem('chatmsg',JSON.stringify(chats))
+                show(chats)
+            }).catch(err=>{
+                console.log(err)
+            })
+    }else{
+        const purl=url+`/user/allchat/0`
+        axios.get(purl)
+            .then(res=>{
+                chats=res.data
+                localStorage.setItem('chatmsg',JSON.stringify(chats))
+                show(chats)
+            }).catch(err=>{
+                console.log(err)
+            })
+    }
 }
-document.addEventListener('DOMContentLoaded',getAllChat);
+
+function show(data){
+    const parent=document.getElementById('chatting');
+    parent.innerHTML=''
+    for(let i=0;i<data.length;i++){
+        const p=document.createElement('p');
+        p.textContent=data[i].userId+' : '+data[i].msg;
+        parent.appendChild(p)
+
+    }
+}
+
+document.addEventListener('DOMContentLoaded',getAllWithLs);
+
+setTimeInterval(()=>{
+    getAllWithLs()
+},1000)
