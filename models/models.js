@@ -38,6 +38,21 @@ const Group=sequelize.define('group',{
     }
 })
 
+const Admin=sequelize.define('admin',{
+    id:{
+        type:Sequelize.INTEGER,
+        primaryKey:true,
+        autoIncrement:true,
+        allowNull:false
+    },
+    // groupname:Sequelize.STRING
+    isadmin:{
+        type:Sequelize.BOOLEAN,
+        defaultValue:false
+    }
+})
 
 
-module.exports={User,personalMsg,Group}
+
+
+module.exports={User,personalMsg,Group,Admin}
