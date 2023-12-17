@@ -1,4 +1,4 @@
-const { User, personalMsg, Group, Admin } = require('../Models/models')
+const { User, personalMsg, Group, Admin } = require('../models/models')
 const bcrypt = require('bcrypt')
 const jwt = require('jsonwebtoken')
 const Sequelize = require('sequelize');

@@ -7,7 +7,7 @@ const path =require('path')
 
 require('dotenv').config();
 
-const {User,personalMsg,Group,Admin}=require('./Models/models')
+const {User,personalMsg,Group,Admin}=require('./models/models')
 
 const sequelize=require('./util/db')
 
