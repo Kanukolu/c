@@ -5,7 +5,7 @@ const authorization=require('../util/auth')
 
 const router=express.Router();
 
-const controllers=require('../Controllers/controllers')
+const controllers=require('../controllers/controllers')
 
 router.post('/user/signup',controllers.signUp);
 
